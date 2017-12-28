@@ -1,2 +1,29 @@
 ---
-# tasks file for ansible-gitlab
+- name: check if docker running
+  service: 
+    name: docker
+    state: started
+  become: yes
+
+- name: docker pull gitlab
+  command: "docker pull {{ docker_registry_path }}"
+
+- name: create base directory
+  file: 
+    path: "{{ application_home }}"
+    state: directory
+    mode: 744
+
+- name: remove the docker container if exist
+  command: docker rm -f gitlab
+  ignore_errors: true
+
+- name: install control.sh
+  template:
+    src: control.sh.j2
+    dest: "{{ control_srcipt }}"
+    mode: 744
+    force: yes
+
+- name: docker run gitlab
+  command: "{{ control_srcipt }} start"

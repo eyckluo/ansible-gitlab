@@ -1,0 +1,24 @@
+#!/bin/bash
+set -e
+function start(){
+	docker run --detach \
+    --hostname {{ application_name }}.example.com \
+    --publish 44310:443 --publish 8100:80 --publish 2210:22 \
+    --name gitlab \
+    --restart always \
+    --volume /srv/gitlab/config:/etc/gitlab \
+    --volume /srv/gitlab/logs:/var/log/gitlab \
+    --volume /srv/gitlab/data:/var/opt/gitlab \
+    gitlab/gitlab-ce:latest
+}
+
+function stop(){
+    docker stop gitlab
+}
+
+function remove(){
+    docker rm -f gitlab
+}
+
+cmd=$1
+eval $cmd

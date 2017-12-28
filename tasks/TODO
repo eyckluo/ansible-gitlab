@@ -1,0 +1,13 @@
+TODO:
+  1. use ansible setup a machine
+     useradd devtoolsuat --create-home --user-group --groups wheel
+
+  2. edit /etc/sudoers, enabled
+     %wheel         ALL = (ALL) NOPASSWD: ALL
+
+  3. add user devtoolsuat to docker group
+     usermod -aG docker devtoolsuat
+     systemctl restart  
+     chown -R root:devtoolsuat /opt
+     chmod 775 /opt
+     

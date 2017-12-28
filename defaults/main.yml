@@ -1,2 +1,4 @@
 ---
-# defaults file for ansible-gitlab
+docker_registry_path: "gitlab/gitlab-ce"
+application_home: "/opt/app/{{ ansible_ssh_user }}/gitlab"
+control_srcipt: "{{ application_home }}/control.sh"
